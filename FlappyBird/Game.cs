@@ -118,7 +118,7 @@ namespace FlappyBird
 
         private void MovePipe(PictureBox pipe)
         {
-            //This works really shitty. 
+            //This doesn't work well at all.
             //Sometimes the pipes are close together, other times they are far away. 
             //I think it may be better to just have their height difference be the same, just have them staggered in x direction
             //Not sure how to do that though?
