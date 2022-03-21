@@ -129,6 +129,7 @@ namespace FlappyBird
             this.btnPlayAgain.Text = "PLAY AGAIN";
             this.btnPlayAgain.UseVisualStyleBackColor = true;
             this.btnPlayAgain.Visible = false;
+            this.btnPlayAgain.Click += new System.EventHandler(this.btnPlayAgain_Click);
             // 
             // btnLeaderboard
             // 

@@ -122,7 +122,6 @@ namespace FlappyBird
         private void btnLeaderboard_Click(object sender, EventArgs e)
         {
             lblGameover.Visible = false;
-            btnPlayAgain.Visible = false;
             btnLeaderboard.Visible = false;
 
             lblName.Visible = true;
@@ -146,6 +145,11 @@ namespace FlappyBird
             {
                 lstLeaderboard.Items.Add(string.Format("{0, -10} | {1, 5}", s.Key, s.Value));
             }
+        }
+
+        private void btnPlayAgain_Click(object sender, EventArgs e)
+        {
+            Application.Restart();
         }
     }
 }
