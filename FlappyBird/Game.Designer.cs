@@ -37,6 +37,13 @@ namespace FlappyBird
             this.bird = new System.Windows.Forms.PictureBox();
             this.gameTimer = new System.Windows.Forms.Timer(this.components);
             this.lblScore = new System.Windows.Forms.Label();
+            this.lblGameover = new System.Windows.Forms.Label();
+            this.btnPlayAgain = new System.Windows.Forms.Button();
+            this.btnLeaderboard = new System.Windows.Forms.Button();
+            this.lstLeaderboard = new System.Windows.Forms.ListBox();
+            this.lblName = new System.Windows.Forms.Label();
+            this.txtName = new System.Windows.Forms.TextBox();
+            this.btnSubmitScore = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pipeTop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ground)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pipeBottom)).BeginInit();
@@ -100,12 +107,95 @@ namespace FlappyBird
             this.lblScore.TabIndex = 13;
             this.lblScore.Text = "Score: 0";
             // 
+            // lblGameover
+            // 
+            this.lblGameover.AutoSize = true;
+            this.lblGameover.Font = new System.Drawing.Font("Snap ITC", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGameover.ForeColor = System.Drawing.Color.Red;
+            this.lblGameover.Location = new System.Drawing.Point(136, 68);
+            this.lblGameover.Name = "lblGameover";
+            this.lblGameover.Size = new System.Drawing.Size(234, 35);
+            this.lblGameover.TabIndex = 14;
+            this.lblGameover.Text = "GAMEOVER!!";
+            this.lblGameover.Visible = false;
+            // 
+            // btnPlayAgain
+            // 
+            this.btnPlayAgain.Font = new System.Drawing.Font("SansSerif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.btnPlayAgain.Location = new System.Drawing.Point(201, 122);
+            this.btnPlayAgain.Name = "btnPlayAgain";
+            this.btnPlayAgain.Size = new System.Drawing.Size(127, 35);
+            this.btnPlayAgain.TabIndex = 15;
+            this.btnPlayAgain.Text = "PLAY AGAIN";
+            this.btnPlayAgain.UseVisualStyleBackColor = true;
+            this.btnPlayAgain.Visible = false;
+            // 
+            // btnLeaderboard
+            // 
+            this.btnLeaderboard.Font = new System.Drawing.Font("SansSerif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.btnLeaderboard.Location = new System.Drawing.Point(143, 163);
+            this.btnLeaderboard.Name = "btnLeaderboard";
+            this.btnLeaderboard.Size = new System.Drawing.Size(227, 35);
+            this.btnLeaderboard.TabIndex = 16;
+            this.btnLeaderboard.Text = "ADD TO LEADERBOARD";
+            this.btnLeaderboard.UseVisualStyleBackColor = true;
+            this.btnLeaderboard.Visible = false;
+            this.btnLeaderboard.Click += new System.EventHandler(this.btnLeaderboard_Click);
+            // 
+            // lstLeaderboard
+            // 
+            this.lstLeaderboard.Font = new System.Drawing.Font("Monospac821 BT", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lstLeaderboard.FormattingEnabled = true;
+            this.lstLeaderboard.ItemHeight = 19;
+            this.lstLeaderboard.Location = new System.Drawing.Point(143, 267);
+            this.lstLeaderboard.Name = "lstLeaderboard";
+            this.lstLeaderboard.Size = new System.Drawing.Size(228, 80);
+            this.lstLeaderboard.TabIndex = 17;
+            this.lstLeaderboard.Visible = false;
+            // 
+            // lblName
+            // 
+            this.lblName.AutoSize = true;
+            this.lblName.Location = new System.Drawing.Point(140, 244);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(41, 13);
+            this.lblName.TabIndex = 18;
+            this.lblName.Text = "Name: ";
+            this.lblName.Visible = false;
+            // 
+            // txtName
+            // 
+            this.txtName.Location = new System.Drawing.Point(187, 241);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(100, 20);
+            this.txtName.TabIndex = 19;
+            this.txtName.Visible = false;
+            // 
+            // btnSubmitScore
+            // 
+            this.btnSubmitScore.Font = new System.Drawing.Font("SansSerif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.btnSubmitScore.Location = new System.Drawing.Point(293, 226);
+            this.btnSubmitScore.Name = "btnSubmitScore";
+            this.btnSubmitScore.Size = new System.Drawing.Size(77, 35);
+            this.btnSubmitScore.TabIndex = 20;
+            this.btnSubmitScore.Text = "Submit";
+            this.btnSubmitScore.UseVisualStyleBackColor = true;
+            this.btnSubmitScore.Visible = false;
+            this.btnSubmitScore.Click += new System.EventHandler(this.btnSubmitScore_Click);
+            // 
             // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Aqua;
             this.ClientSize = new System.Drawing.Size(545, 543);
+            this.Controls.Add(this.btnSubmitScore);
+            this.Controls.Add(this.txtName);
+            this.Controls.Add(this.lblName);
+            this.Controls.Add(this.lstLeaderboard);
+            this.Controls.Add(this.btnLeaderboard);
+            this.Controls.Add(this.btnPlayAgain);
+            this.Controls.Add(this.lblGameover);
             this.Controls.Add(this.lblScore);
             this.Controls.Add(this.bird);
             this.Controls.Add(this.pipeTop);
@@ -134,5 +224,12 @@ namespace FlappyBird
         private System.Windows.Forms.PictureBox bird;
         private System.Windows.Forms.Timer gameTimer;
         private System.Windows.Forms.Label lblScore;
+        private System.Windows.Forms.Label lblGameover;
+        private System.Windows.Forms.Button btnPlayAgain;
+        private System.Windows.Forms.Button btnLeaderboard;
+        private System.Windows.Forms.ListBox lstLeaderboard;
+        private System.Windows.Forms.Label lblName;
+        private System.Windows.Forms.TextBox txtName;
+        private System.Windows.Forms.Button btnSubmitScore;
     }
 }

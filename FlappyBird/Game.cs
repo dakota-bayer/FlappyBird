@@ -12,7 +12,7 @@ namespace FlappyBird
 {
     public partial class Game : Form
     {
-        const int GraviationalConstant  = 5;
+        const int GraviationalConstant = 5;
         int gravity = GraviationalConstant;
 
         int pipeSpeed = 20;
@@ -20,7 +20,7 @@ namespace FlappyBird
         int score = 0;
         int previousScore = 0;
 
-        Random randomNumber = new Random();
+        Dictionary<string, int> scores = new Dictionary<string, int>();
 
         public Game()
         {
@@ -34,42 +34,35 @@ namespace FlappyBird
             pipeTop.Left -= pipeSpeed;
             pipeBottom.Left -= pipeSpeed;
 
-            if (pipeTop.Left < -100)
+            if (pipeTop.Left < -100) //Resetting pipe to right side of screen
             {
-                pipeTop.Left = 720;
-                MovePipe(pipeBottom);
-                score++;
-                lblScore.Text = "Score: " + score;
-            }
-            if (pipeBottom.Left < -73)
-            {
+                pipeTop.Left = 700;
                 pipeBottom.Left = 700;
-                MovePipe(pipeTop);
+                MovePipesUpAndDown();
                 score++;
                 lblScore.Text = "Score: " + score;
             }
 
 
-            //Speeding up
-            if(score - previousScore > 5)
+            if (score - previousScore > 5) //Bird is speeding up
             {
                 pipeSpeed += 10;
                 previousScore = score;
             }
 
 
-            //if (bird.Bounds.IntersectsWith(ground.Bounds)||
-            //    bird.Bounds.IntersectsWith(pipeBottom.Bounds)||
-            //    bird.Bounds.IntersectsWith(pipeTop.Bounds)||
-            //    bird.Top < -5)
-            //{
-            //    EndGame();
-            //}
+            if (bird.Bounds.IntersectsWith(ground.Bounds) ||
+                bird.Bounds.IntersectsWith(pipeBottom.Bounds) ||
+                bird.Bounds.IntersectsWith(pipeTop.Bounds) ||
+                bird.Top < -5)
+            {
+                EndGame();
+            }
         }
 
         private void Game_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Space)
+            if (e.KeyCode == Keys.Space)
             {
                 gravity = -GraviationalConstant;
             }
@@ -77,7 +70,7 @@ namespace FlappyBird
 
         private void Game_KeyUp(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Space)
+            if (e.KeyCode == Keys.Space)
             {
                 gravity = GraviationalConstant;
             }
@@ -86,12 +79,12 @@ namespace FlappyBird
         private void MovePipesUpAndDown()
         {
             Random randomNumber = new Random();
-            int verticalChange = randomNumber.Next(-80, 80);
+            int verticalChange = randomNumber.Next(-100, 100); 
 
             int topPrevious = pipeTop.Top;
             int bottomPrevious = pipeBottom.Top;
 
-            if(score % 2.0 == 0) //if score is even, move pipes up, if score is odd then move pipes down
+            if (score % 2.0 == 0) //if score is even, move pipes up, if score is odd then move pipes down
             {
                 pipeTop.Top += verticalChange;
                 pipeBottom.Top += verticalChange;
@@ -102,46 +95,57 @@ namespace FlappyBird
                 pipeBottom.Top -= verticalChange;
             }
 
-            if(pipeTop.Bottom < 30) //if top pipe goes out of bounds
+            if (pipeTop.Bottom < 30) //if top pipe goes out of bounds
             {
-                pipeTop.Top = topPrevious;
-                pipeBottom.Top = bottomPrevious;
+                pipeTop.Top = topPrevious + 100;
+                pipeBottom.Top = bottomPrevious + 100;
             }
 
             if (pipeBottom.Top > 490) //if bottom pipe goes below the ground
             {
-                pipeTop.Top = topPrevious;
-                pipeBottom.Top = bottomPrevious;
+                pipeTop.Top = topPrevious - 100;
+                pipeBottom.Top = bottomPrevious - 100;
             }
 
-        }
-
-        private void MovePipe(PictureBox pipe)
-        {
-            //This doesn't work well at all.
-            //Sometimes the pipes are close together, other times they are far away. 
-            //I think it may be better to just have their height difference be the same, just have them staggered in x direction
-            //Not sure how to do that though?
-
-            if (pipe == pipeTop)
-            {
-                //Move pipe top up or down
-                int max = 20;
-                int min = -230;
-                pipeTop.Top = randomNumber.Next(min, max);
-            }
-            else if (pipe == pipeBottom) 
-            {
-                //Move pipe bottom up or down
-                int max = 490;
-                int min = 230;
-                pipeBottom.Top = randomNumber.Next(min, max);
-            }
         }
 
         private void EndGame()
         {
             gameTimer.Stop();
+            bird.Visible = false;
+            lblGameover.Visible = true;
+            btnPlayAgain.Visible = true;
+            btnLeaderboard.Visible = true;
+            lblScore.Text = "Score: " + score;
+        }
+
+        private void btnLeaderboard_Click(object sender, EventArgs e)
+        {
+            lblGameover.Visible = false;
+            btnPlayAgain.Visible = false;
+            btnLeaderboard.Visible = false;
+
+            lblName.Visible = true;
+            txtName.Visible = true;
+            btnSubmitScore.Visible = true;
+
+            
+        }
+
+        private void btnSubmitScore_Click(object sender, EventArgs e)
+        {
+            string name = txtName.Text;
+            lstLeaderboard.Visible = true;
+            scores.Add(name, score);
+
+            scores.OrderBy(x => x.Value);
+
+            lstLeaderboard.Items.Add("Name       | Score      ");
+
+            foreach (KeyValuePair<string, int> s in scores)
+            {
+                lstLeaderboard.Items.Add(string.Format("{0, -10} | {1, 5}", s.Key, s.Value));
+            }
         }
     }
 }
